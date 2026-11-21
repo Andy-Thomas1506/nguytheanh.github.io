@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thư viện số cá nhân — Bộ 8 Slide Học liệu Số</title>
+
+  <!-- Google Fonts: Be Vietnam Pro & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', '"Inter"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            navy: {
+              950: '#071426',
+              900: '#0b1d36',
+              800: '#102849',
+            },
+            cyanAccent: '#38bdf8',
+            goldAccent: '#fbbf24',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Nền tối sang trọng kết hợp ánh sáng radial Cyan & Gold */
+    body {
+      background-color: #071426;
+      background-image:
+        radial-gradient(circle at 10% 12%, rgba(56, 189, 248, 0.14) 0%, transparent 38%),
+        radial-gradient(circle at 90% 16%, rgba(251, 191, 36, 0.11) 0%, transparent 36%),
+        radial-gradient(circle at 50% 90%, rgba(14, 165, 233, 0.10) 0%, transparent 45%);
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+
+    /* Lưới kỹ thuật số mờ */
+    .bg-tech-grid {
+      background-size: 36px 36px;
+      background-image:
+        linear-gradient(to right, rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+    }
+
+    /* Hiệu ứng thẻ kính mờ (Glassmorphism) */
+    .glass-card {
+      background: linear-gradient(145deg, rgba(15, 35, 64, 0.80), rgba(9, 23, 44, 0.90));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      box-shadow: 0 12px 32px -8px rgba(2, 8, 20, 0.65);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(56, 189, 248, 0.42);
+      box-shadow: 0 18px 40px -10px rgba(56, 189, 248, 0.16);
+    }
+
+    .text-gradient-cyan {
+      background: linear-gradient(95deg, #38bdf8 0%, #22d3ee 55%, #bae6fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-gold {
+      background: linear-gradient(95deg, #fbbf24 0%, #f59e0b 60%, #fde68a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Thanh cuộn ngang mượt cho thanh chọn 8 slide trên mobile */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .slide-animate {
+      animation: fadeSlideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  </style>
+</head>
+<body class="bg-tech-grid antialiased selection:bg-sky-500/30 selection:text-sky-200 flex flex-col">
+
+  <!-- ===================================================================== -->
+  <!-- 1. THANH ĐIỀU HƯỚNG TRÊN CÙNG (STICKY NAVBAR)                         -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-40 border-b border-sky-400/15 bg-[#071426]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-2.5">
+      <!-- Hàng 1: Thương hiệu + Thông tin sinh viên chỉnh sửa trực tiếp + Nút tải HTML -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <!-- Logo & Tiêu đề -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400/20 to-amber-400/20 border border-sky-400/40 flex items-center justify-center shadow-inner shrink-0">
+            <svg class="w-5 h-5 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-white tracking-tight text-base sm:text-lg">Thư viện số cá nhân</span>
+              <span id="navSlideBadge" class="px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/40">
+                SLIDE 01 / 08
+              </span>
+            </div>
+            <p id="navSubCategory" class="text-xs text-slate-400 hidden sm:block">Hệ điều hành &amp; Môi trường số</p>
+          </div>
+        </div>
+
+        <!-- Khu vực Thông tin sinh viên (Bấm vào để sửa trực tiếp & tự lưu) + Nút Export -->
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2 text-xs bg-slate-900/90 px-3 py-1.5 rounded-xl border border-sky-400/25">
+            <span class="text-slate-400 flex items-center gap-1">
+              Sinh viên:
+              <strong id="studentName" contenteditable="false" spellcheck="false" class="text-sky-300 font-semibold outline-none focus:bg-sky-500/20 focus:px-1.5 rounded transition cursor-text">Nguyễn Thế Anh</strong>
+            </span>
+            <span class="text-slate-600">•</span>
+            <span class="text-slate-400 flex items-center gap-1">
+              MSSV:
+              <strong id="studentId" contenteditable="false" spellcheck="false" title="foid" class="text-amber-300 font-semibold outline-none focus:bg-amber-500/20 focus:px-1.5 rounded transition cursor-text">PK05066</strong>
+            </span>
+            <span class="text-slate-600 hidden md:inline">•</span>
+            <span class="text-slate-400 hidden md:flex items-center gap-1">
+              Môn:
+              <strong id="courseName" contenteditable="false" spellcheck="false" title="Nhấp để nhập Tên môn học" class="text-slate-200 font-medium outline-none focus:bg-slate-700 focus:px-1.5 rounded transition cursor-text">CNTT4.0</strong>
+            </span>
+          </div>
+
+          <!-- Nút xuất/tải file HTML độc lập của slide hiện tại -->
+          <button type="button" onclick="dwownloadCurrentSlideHTML()" title="Tải xuống trang Slide hiện tại thành 1 file .html độc lập để nộp bài" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 hover:from-sky-400 hover:to-cyan-300 shadow-md shadow-sky-500/20 transition cursor-pointer">
+            <!-- ===svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg === -->
+            <span class="hidden sm:inline">Xin chào</span>
+            <span class="sm:hidden">Hi</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hàng 2: Thanh chuyển đổi nhanh 8 trang/slide -->
+      <nav aria-label="Danh sách 8 Slide" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-0.5 pb-0.5">
+        <div id="slideTabsContainer" class="flex items-center gap-1.5 min-w-max">
+          <!-- Các nút Slide 01 -> Slide 08 được render tự động bằng JS -->
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- 2. NỘI DUNG CHÍNH CỦA SLIDE ĐANG CHỌN                                 -->
+  <!-- ===================================================================== -->
+  <main id="slideMainContainer" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-9 space-y-8 slide-animate">
+
+    <!-- KHỐI A: HERO SLIDE (NỘI DUNG CHỦ ĐỀ SLIDE + ĐỒ HỌA MINH HỌA SVG) -->
+    <section class="glass-card rounded-3xl p-6 sm:p-8 lg:p-9 relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-64 h-64 bg-sky-400/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+        <!-- Cột trái: Thông tin bài học & luận điểm chính của Slide -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-300 text-xs font-semibold tracking-wide">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span id="heroTopicTag">CHỦ ĐỀ 01 • HỆ ĐIỀU HÀNH</span>
+          </div>
+
+          <h1 id="heroTitle" class="text-2xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight">
+            Khám phá Hệ điều hành (Operating System)
+          </h1>
+
+          <p id="heroSubtitle" class="text-base sm:text-lg font-medium text-amber-300/95">
+            Từ nền tảng cốt lõi đến xu hướng hiện đại.
+          </p>
+
+          <p id="heroDescription" class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Thành phần thiết yếu không thể thiếu của bất kỳ hệ thống máy tính nào, đóng vai trò cầu nối điều phối tài nguyên phần cứng và cung cấp môi trường tương tác cho người dùng.
+          </p>
+
+          <!-- Các điểm nhấn kiến thức của slide (Key Insights) -->
+          <div id="heroBullets" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+            <!-- Render động bằng JS -->
+          </div>
+        </div>
+
+        <!-- Cột phải: Hình minh họa SVG/Canvas trực quan cho riêng Slide này -->
+        <div class="lg:col-span-5">
+          <div class="rounded-2xl bg-[#050e1c]/95 border border-sky-400/30 p-4 sm:p-5 shadow-inner relative group">
+            <div class="flex items-center justify-between mb-2.5">
+              <span id="svgCaptionTitle" class="text-xs font-semibold text-sky-300">Sơ đồ minh họa trực quan</span>
+              <button type="button" onclick="openMediaLightbox()" class="inline-flex items-center gap-1 text-[11px] font-medium text-amber-300 hover:text-amber-200 bg-amber-400/10 px-2.5 py-1 rounded-lg border border-amber-400/30 transition cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+                <span>Phóng to hình</span>
+              </button>
+            </div>
+            <div id="heroSvgContainer" class="w-full overflow-hidden rounded-xl bg-[#071426] border border-slate-800/90 p-2">
+              <!-- Hình minh họa SVG riêng của từng Slide sẽ render tại đây -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KHỐI B: 4 THÀNH PHẦN CỦA "THƯ VIỆN SỐ CÁ NHÂN" GẮN VỚI SLIDE NÀY -->
+    <section aria-label="4 thành phần thư viện số cá nhân của slide">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Cấu trúc học liệu cá nhân hóa</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-white mt-0.5">
+            Nội dung “Thư viện số cá nhân” — <span id="sectionSlideLabel" class="text-gradient-cyan">Slide 01</span>
+          </h2>
+        </div>
+        <p class="text-xs text-slate-400">Đầy đủ 4 nhóm: Tập tin (a), Hình ảnh/Video (b), Link tham chiếu (c), Ghi chú cá nhân (d)</p>
+      </div>
+
+      <!-- Lưới 2x2 chuẩn mực cho 4 thành phần a, b, c, d -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- =============================================================== -->
+        <!-- THÀNH PHẦN A: DẠNG TẬP TIN (FILE): PDF, WORD, VĂN BẢN KHÁC      -->
+        <!-- =============================================================== -->
+        <article class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-sky-500/15 border border-sky-400/40 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-sky-400">a) Dạng tập tin (File)</span>
+                  <h3 class="text-lg font-bold text-white">PDF, Word &amp; Văn bản học thuật</h3>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-400/10 text-sky-300 border border-sky-400/25">Tài liệu gốc</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-300 mb-3.5">
+              Các tệp văn bản điện tử được thu thập và chuẩn hóa phục vụ nghiên cứu chuyên sâu cho nội dung slide này:
+            </p>
+
+            <!-- Danh sách 3 tệp tin (PDF, DOCX, XLSX/PPTX) -->
+            <div id="componentFilesList" class="space-y-2.5 mb-4">
+              <!-- Render động bằng JS -->
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs text-slate-400">
+            <span>Nhấn “Xem trước” trên từng tệp để đọc tóm tắt</span>
+            <span class="text-sky-300 font-medium">3 tệp đã lưu</span>
+          </div>
+        </article>
+
+        <!-- =============================================================== -->
+        <!-- THÀNH PHẦN B: HÌNH ẢNH HAY VIDEO                                -->
+        <!-- =============================================================== -->
+        <article class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-cyan-500/15 border border-cyan-400/40 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">b) Hình ảnh hay Video</span>
+                  <h3 class="text-lg font-bold text-white">Tư liệu trực quan &amp; Bài giảng số</h3>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-cyan-400/10 text-cyan-300 border border-cyan-400/25">Đa phương tiện</span>
+            </div>
+
+            <!-- Khung preview hình ảnh & video bài giảng -->
+            <div id="componentMediaBox" class="space-y-3 mb-4">
+              <!-- Render động bằng JS -->
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-700/60 flex items-center justify-between gap-2">
+            <span class="text-xs text-slate-400">Hỗ trợ phóng to sơ đồ &amp; phát mô phỏng</span>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="openMediaLightbox()" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500/15 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 border border-cyan-400/30 transition cursor-pointer">
+                Phóng to ảnh
+              </button>
+              <button type="button" onclick="openVideoModal()" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-500/15 text-amber-300 hover:bg-amber-400 hover:text-slate-950 border border-amber-400/30 transition cursor-pointer">
+                ▶ Xem Video bài giảng
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- =============================================================== -->
+        <!-- THÀNH PHẦN C: LINK THAM CHIẾU ĐẾN WEBSITE KHÁC                  -->
+        <!-- =============================================================== -->
+        <article class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-amber-400">c) Link tham chiếu đến website khác</span>
+                  <h3 class="text-lg font-bold text-white">Nguồn học liệu mở &amp; Tài liệu chuẩn</h3>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-400/10 text-amber-300 border border-amber-400/25">URL / Bookmark</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-300 mb-3.5">
+              Các liên kết trực tuyến uy tín giúp mở rộng kiến thức và tra cứu tiêu chuẩn cập nhật mới nhất:
+            </p>
+
+            <!-- Danh sách 3 link tham chiếu -->
+            <div id="componentLinksList" class="space-y-2.5 mb-4">
+              <!-- Render động bằng JS -->
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-700/60 flex items-center justify-between text-xs text-slate-400">
+            <span>Bấm liên kết để mở tab mới hoặc sao chép URL</span>
+            <span class="text-amber-300 font-medium">Đã kiểm duyệt</span>
+          </div>
+        </article>
+
+        <!-- =============================================================== -->
+        <!-- THÀNH PHẦN D: CÁC GHI CHÚ CỦA BẢN THÂN VỀ TÀI LIỆU ĐÃ THU THẬP  -->
+        <!-- =============================================================== -->
+        <article class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-emerald-500/15 border border-emerald-400/40 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">d) Các ghi chú của bản thân về tài liệu</span>
+                  <h3 class="text-lg font-bold text-white">Đúc kết &amp; Phản biện cá nhân</h3>
+                </div>
+              </div>
+              <span id="noteSaveStatus" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-400/10 text-emerald-300 border border-emerald-400/25">Đã lưu</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-300 mb-2.5">
+              Tóm tắt ý chính, nhận xét cá nhân và từ khóa tra cứu (bạn có thể chỉnh sửa trực tiếp bên dưới):
+            </p>
+
+            <!-- Ô nhập ghi chú cá nhân tự lưu localStorage -->
+            <textarea id="personalNoteInput" rows="5" class="w-full rounded-xl bg-[#050e1c]/90 border border-emerald-400/30 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 text-xs sm:text-sm text-slate-100 p-3.5 leading-relaxed outline-none transition resize-y" placeholder="Nhập ghi chú cá nhân của bạn về tài liệu này..."></textarea>
+
+            <!-- Thẻ từ khóa (Tags) -->
+            <div id="noteTagsContainer" class="flex flex-wrap gap-1.5 mt-2.5">
+              <!-- Render động bằng JS -->
+            </div>
+          </div>
+
+          <div class="pt-3 mt-3 border-t border-slate-700/60 flex items-center justify-between gap-2">
+            <button type="button" onclick="resetCurrentNote()" class="text-xs text-slate-400 hover:text-amber-300 transition cursor-pointer">
+              Khôi phục ghi chú mẫu
+            </button>
+            <button type="button" onclick="saveCurrentNote(true)" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Lưu ghi chú</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- 3. FOOTER ĐIỀU HƯỚNG GIỮA CÁC SLIDE (PREVIOUS <- CURRENT -> NEXT)     -->
+  <!-- ===================================================================== -->
+  <footer class="border-t border-sky-400/15 bg-[#050e1c]/95 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-xs text-slate-400 text-center sm:text-left">
+          <span class="text-slate-200 font-semibold">Thư viện số cá nhân</span> — <span id="footerSlideTitle">Slide 01: Khám phá Hệ điều hành</span>
+        </div>
+
+        <!-- Nút chuyển Slide Trước / Sau & Bộ chọn nhanh -->
+        <div class="flex items-center gap-2">
+          <button type="button" id="btnPrevSlide" onclick="navigateSlide(-1)" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/90 text-slate-200 hover:bg-sky-500/20 hover:text-sky-300 border border-slate-700 hover:border-sky-400/40 disabled:opacity-40 disabled:pointer-events-none transition cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Slide trước</span>
+          </button>
+
+          <span id="footerPageIndicator" class="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-sky-500/20 to-amber-500/20 text-amber-300 border border-amber-400/40">
+            Slide 01 / 08
+          </span>
+
+          <button type="button" id="btnNextSlide" onclick="navigateSlide(1)" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800/90 text-slate-200 hover:bg-sky-500/20 hover:text-sky-300 border border-slate-700 hover:border-sky-400/40 disabled:opacity-40 disabled:pointer-events-none transition cursor-pointer">
+            <span>Slide tiếp</span>
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- 4. CÁC MODAL XEM TRƯỚC TÀI LIỆU, PHÓNG TO HÌNH & MÔ PHỎNG VIDEO       -->
+  <!-- ===================================================================== -->
+  <div id="universalModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="uModalTitle">
+    <div class="glass-card rounded-2xl max-w-2xl w-full p-6 border border-sky-400/40 shadow-2xl">
+      <div class="flex items-start justify-between gap-3 pb-3 border-b border-slate-700/70">
+        <div>
+          <span id="uModalBadge" class="text-xs font-bold uppercase tracking-wider text-amber-400">Xem trước tài liệu</span>
+          <h4 id="uModalTitle" class="text-lg font-bold text-white mt-0.5">Tiêu đề</h4>
+        </div>
+        <button type="button" onclick="closeUniversalModal()" aria-label="Đóng cửa sổ" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="uModalBody" class="py-4 text-sm text-slate-200 max-h-[70vh] overflow-y-auto">
+        <!-- Nội dung modal -->
+      </div>
+
+      <div class="pt-3 border-t border-slate-700/70 flex justify-end">
+        <button type="button" onclick="closeUniversalModal()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-slate-950 hover:bg-sky-400 transition cursor-pointer">
+          Đóng cửa sổ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast thông báo (thay thế hoàn toàn alert) -->
+  <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden max-w-sm px-4 py-3 rounded-xl bg-slate-900/95 border border-sky-400/50 text-xs text-slate-100 shadow-2xl backdrop-blur-md">
+    <span id="toastMessage"></span>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 5. DỮ LIỆU 8 SLIDE & LOGIC XỬ LÝ TƯƠNG TÁC                            -->
+  <!-- ===================================================================== -->
+  <script>
+    // =========================================================================
+    // KHO DỮ LIỆU ĐẦY ĐỦ CHO 8 SLIDE (BÁM SÁT NGUỒN TÀI LIỆU NOTEBOOK)
+    // =========================================================================
+    const SLIDES_DATA = [
+      {
+        id: 1,
+        shortTitle: "Slide 01: Hệ điều hành",
+        category: "Hệ điều hành & Môi trường số",
+        topicTag: "SLIDE 01 • NỀN TẢNG HỆ THỐNG",
+        title: "Khám phá Hệ điều hành (Operating System)",
+        subtitle: "Từ nền tảng cốt lõi đến xu hướng hiện đại.",
+        description: "Hệ điều hành là thành phần thiết yếu không thể thiếu của bất kỳ hệ thống máy tính nào, giữ vai trò trung tâm kết nối và điều phối giữa người dùng, ứng dụng với phần cứng.",
+        bullets: [
+          "Lộ trình: Khái niệm cơ bản → Trải nghiệm thực tế",
+          "Cấu trúc lõi (Kernel) & Chức năng điều phối",
+          "Quản lý tiến trình, bộ nhớ, hệ thống tệp tin",
+          "Xu hướng HĐH hiện đại tích hợp AI & Đám mây"
+        ],
+        svgCaption: "Sơ đồ đồng tâm: Hệ điều hành kết nối Người dùng & Phần cứng",
+        svg: `
+          <svg viewBox="0 0 420 260" class="w-full h-auto" role="img" aria-label="Sơ đồ vòng tròn đồng tâm Hệ điều hành">
+            <defs>
+              <radialGradient id="osGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#071426" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle cx="210" cy="130" r="115" fill="url(#osGlow)"/>
+            <!-- Các vòng tròn đồng tâm -->
+            <circle cx="210" cy="130" r="108" fill="none" stroke="#38bdf8" stroke-opacity="0.22" stroke-width="1.2"/>
+            <circle cx="210" cy="130" r="84" fill="none" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.2"/>
+            <circle cx="210" cy="130" r="60" fill="none" stroke="#fbbf24" stroke-opacity="0.45" stroke-width="1.2" stroke-dasharray="4 4"/>
+            <!-- Đường trục chéo -->
+            <line x1="120" y1="220" x2="300" y2="40" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <line x1="120" y1="40" x2="300" y2="220" stroke="#38bdf8" stroke-opacity="0.25" stroke-width="1" stroke-dasharray="3 3"/>
+            <!-- Lõi OS trung tâm -->
+            <circle cx="210" cy="130" r="34" fill="#0b2545" stroke="#38bdf8" stroke-width="2.5"/>
+            <text x="210" y="136" text-anchor="middle" fill="#fbbf24" font-size="18" font-weight="800">OS</text>
+            <!-- Nút Người dùng -->
+            <circle cx="290" cy="54" r="30" fill="#0f294a" stroke="#fbbf24" stroke-width="2"/>
+            <text x="290" y="51" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Người</text>
+            <text x="290" y="64" text-anchor="middle" fill="#fde68a" font-size="11" font-weight="700">dùng</text>
+            <!-- Nút Phần cứng -->
+            <circle cx="290" cy="206" r="30" fill="#0f294a" stroke="#38bdf8" stroke-width="2"/>
+            <text x="290" y="203" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Phần</text>
+            <text x="290" y="216" text-anchor="middle" fill="#7dd3fc" font-size="11" font-weight="700">cứng</text>
+            <!-- Nhãn lớp ứng dụng -->
+            <rect x="30" y="116" width="96" height="28" rx="8" fill="#0d223f" stroke="#38bdf8" stroke-opacity="0.5"/>
+            <text x="78" y="134" text-anchor="middle" fill="#bae6fd" font-size="10" font-weight="600">Ứng dụng &amp; UI</text>
+          </svg>
+        `,
+        files: [
+          { ext: "PDF", color: "rose", name: "Giao_trinh_Kham_pha_He_dieu_hanh_2026.pdf", desc: "Tài liệu tổng quan cấu trúc Kernel, quản lý tiến trình và bộ nhớ.", preview: "Chương 1: Hệ điều hành là lớp phần mềm hệ thống trung gian giữa phần cứng máy tính và người dùng. Các chức năng chính gồm: Quản lý tiến trình (Process), Quản lý bộ nhớ chính (RAM), Quản lý hệ thống tập tin (File System) và Điều khiển thiết bị ngoại vi (I/O)." },
+          { ext: "DOCX", color: "blue", name: "De_cuong_So_sanh_Windows_Linux_macOS.docx", desc: "Bảng phân tích kiến trúc nhân và cơ chế bảo mật các HĐH phổ biến.", preview: "So sánh trọng tâm: Windows tối ưu tương thích phần mềm doanh nghiệp & mô hình Windows-as-a-Service; Linux mạnh mẽ cho máy chủ & mã nguồn mở; macOS tối ưu đồng bộ phần cứng Apple Silicon." },
+          { ext: "XLSX", color: "emerald", name: "Danh_muc_Chuc_nang_Loi_OS.xlsx", desc: "Bảng tổng hợp các dịch vụ hệ thống (System Calls) và tài nguyên.", preview: "Phân nhóm System Calls: (1) Điều khiển tiến trình, (2) Thao tác tệp tin, (3) Quản lý thiết bị, (4) Duy trì thông tin hệ thống, (5) Truyền thông liên tiến trình." }
+        ],
+        media: {
+          imageTitle: "Sơ đồ kiến trúc phân lớp Hệ điều hành (User ↔ OS ↔ Hardware)",
+          videoTitle: "Bài giảng số 01: Cơ chế vận hành cốt lõi của Hệ điều hành (08:45)",
+          videoSummary: "Video minh họa cách hệ điều hành tiếp nhận lệnh từ giao diện người dùng, chuyển qua System Call xuống nhân (Kernel) để điều phối CPU, RAM và ổ cứng một cách an toàn."
+        },
+        links: [
+          { title: "Microsoft Learn — Kiến trúc cốt lõi Windows OS", url: "https://learn.microsoft.com/vi-vn/windows/", tag: "Tài liệu chuẩn" },
+          { title: "MIT OpenCourseWare — Operating System Engineering", url: "https://ocw.mit.edu/", tag: "Học liệu mở" },
+          { title: "The Linux Kernel Archives — Tài liệu nhân hệ thống", url: "https://www.kernel.org/doc/html/latest/", tag: "Mã nguồn mở" }
+        ],
+        defaultNote: "• Ý chính: Hệ điều hành là cầu nối bắt buộc giữa Người dùng và Phần cứng.\n• Lộ trình nắm vững: Khái niệm cơ bản → Trải nghiệm thực tế → Cấu trúc lõi → Chức năng cốt lõi.\n• Nhận xét cá nhân: Cần hiểu rõ cơ chế quản lý tài nguyên của OS để tối ưu hiệu năng khi lập trình và sử dụng máy tính.",
+        tags: ["#HeDieuHanh", "#OperatingSystem", "#Kernel", "#NenTangSo"]
+      },
+      {
+        id: 2,
+        shortTitle: "Slide 02: Trải nghiệm liền mạch",
+        category: "Hệ điều hành & Môi trường số",
+        topicTag: "SLIDE 02 • GIAO DIỆN THÍCH ỨNG ĐA THIẾT BỊ",
+        title: "Trải Nghiệm Liền Mạch (Seamless Experience)",
+        subtitle: "Chuyển đổi linh hoạt giữa Chế độ Desktop và Chế độ Tablet.",
+        description: "Hệ điều hành hiện đại duy trì tương tác logic đồng nhất trên mọi kích thước màn hình, tự động tối ưu bố cục điều khiển theo thao tác chuột/bàn phím hoặc cảm ứng chạm.",
+        bullets: [
+          "Chế độ Desktop: Độ chính xác cao, đa nhiệm cửa sổ",
+          "Learning Curve thấp: Thao tác quen thuộc, dễ làm quen",
+          "Chế độ Tablet: Thiết kế thích ứng (Responsive UI)",
+          "Tự động chuyển đổi mượt mà khi tháo/gắn bàn phím"
+        ],
+        svgCaption: "Đối chiếu Chế độ Desktop (Độ chính xác cao) & Chế độ Tablet (Cảm ứng)",
+        svg: `
+          <svg viewBox="0 0 420 260" class="w-full h-auto" role="img" aria-label="So sánh Chế độ Desktop và Chế độ Tablet">
+            <!-- Khung trái: Desktop Mode -->
+            <rect x="16" y="24" width="174" height="176" rx="14" fill="#0b203d" stroke="#38bdf8" stroke-width="1.6"/>
+            <text x="103" y="46" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="700">Chế độ Desktop</text>
+            <rect x="30" y="56" width="146" height="96" rx="6" fill="#071426" stroke="#334155"/>
+            <!-- Start menu & cửa sổ nhỏ -->
+            <rect x="35" y="88" width="54" height="54" rx="4" fill="#1e3a5f" stroke="#38bdf8" stroke-opacity="0.6"/>
+            <rect x="35" y="144" width="136" height="6" rx="2" fill="#38bdf8" fill-opacity="0.4"/>
+            <!-- Con trỏ chuột -->
+            <polygon points="118,95 118,113 123,109 127,117 130,115 126,107 132,107" fill="#fbbf24"/>
+            <text x="103" y="172" text-anchor="middle" fill="#e2e8f0" font-size="9.5" font-weight="600">Độ chính xác cao</text>
+            <text x="103" y="186" text-anchor="middle" fill="#94a3b8" font-size="9">Learning Curve thấp</text>
+
+            <!-- Đường nối đồng bộ ở giữa -->
+            <path d="M 190 112 C 205 90, 215 134, 230 112" fill="none" stroke="#fbbf24" stroke-width="2.2"/>
+            <circle cx="210" cy="112" r="5" fill="#fbbf24"/>
+
+            <!-- Khung phải: Tablet Mode -->
+            <rect x="230" y="24" width="174" height="176" rx="14" fill="#0b203d" stroke="#22d3ee" stroke-width="1.6"/>
+            <text x="317" y="46" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="700">Chế độ Tablet</text>
+            <rect x="248" y="56" width="138" height="96" rx="10" fill="#071426" stroke="#334155"/>
+            <!-- Các ô Live Tiles cảm ứng -->
+            <rect x="256" y="64" width="38" height="36" rx="5" fill="#164e63" stroke="#22d3ee" stroke-opacity="0.6"/>
+            <rect x="300" y="64" width="42" height="78" rx="5" fill="#1e3a5f" stroke="#fbbf24" stroke-opacity="0.7"/>
+            <rect x="348" y="64" width="30" height="36" rx="5" fill="#164e63" stroke="#22d3ee" stroke-opacity="0.6"/>
+            <rect x="256" y="106" width="38" height="36" rx="5" fill="#164e63" stroke="#22d3ee" stroke-opacity="0.6"/>
+            <rect x="348" y="106" width="30" height="36" rx="5" fill="#164e63" stroke="#22d3ee" stroke-opacity="0.6"/>
+            <!-- Biểu tượng chạm cảm ứng -->
+            <circle cx="321" cy="103" r="9" fill="#fbbf24" fill-opacity="0.25" stroke="#fbbf24" stroke-width="1.5"/>
+            <circle cx="321" cy="103" r="3" fill="#fbbf24"/>
+            <text x="317" y="172" text-anchor="middle" fill="#e2e8f0" font-size="9.5" font-weight="600">Thiết kế thích ứng</text>
+            <text x="317" y="186" text-anchor="middle" fill="#94a3b8" font-size="9">Tự động chuyển đổi</text>
+
+            <!-- Thanh chân sơ đồ -->
+            <rect x="16" y="212" width="388" height="34" rx="10" fill="#091b34" stroke="#38bdf8" stroke-opacity="0.25"/>
+            <text x="210" y="233" text-anchor="middle" fill="#bae6fd" font-size="10" font-weight="600">Tương tác logic đồng nhất trên mọi màn hình, giảm thiểu thời gian học hỏi</text>
+          </svg>
+        `,
+        files: [
+          { ext: "PDF", color: "rose", name: "Thiet_ke_Giao_dien_Thich_ung_Continuum.pdf", desc: "Phân tích cơ chế chuyển đổi giao diện giữa PC, máy tính bảng và thiết bị lai 2-trong-1.", preview: "Nguyên lý Continuum & Adaptive UI: Khi ngắt kết nối bàn phím vật lý, hệ điều hành tự động phóng to vùng chạm (Touch Targets), chuyển thanh tác vụ sang điều hướng cử chỉ và mở toàn màn hình ứng dụng." },
+          { ext: "DOCX", color: "blue", name: "Bao_cao_UX_Desktop_vs_Tablet.docx", desc: "Đánh giá trải nghiệm người dùng và đường cong học tập (Learning Curve).", preview: "Tương tác logic đồng nhất giúp người dùng không cần học lại cách vận hành khi đổi thiết bị làm việc từ văn phòng sang di động." },
+          { ext: "PPTX", color: "amber", name: "Slide_Minh_hoa_Da_nen_tang.pptx", desc: "Bộ slide phân tích thiết kế giao diện thích ứng đa màn hình.", preview: "Tổng hợp 12 nguyên tắc vàng trong thiết kế UI/UX thích ứng (Responsive & Adaptive Layout)." }
+        ],
+        media: {
+          imageTitle: "Mô hình chuyển đổi Chế độ Desktop ↔ Chế độ Tablet",
+          videoTitle: "Bài giảng số 02: Trải nghiệm liền mạch trên thiết bị lai 2-in-1 (06:20)",
+          videoSummary: "Trình diễn thực tế quá trình hệ điều hành tự động nhận diện trạng thái phần cứng để chuyển đổi giữa môi trường chuột-phím chính xác cao và giao diện cảm ứng chạm."
+        },
+        links: [
+          { title: "Microsoft Fluent Design — Thiết kế thích ứng đa thiết bị", url: "https://fluent2.microsoft.design/", tag: "Chuẩn UI/UX" },
+          { title: "Apple Human Interface Guidelines — Adaptive Layout", url: "https://developer.apple.com/design/human-interface-guidelines/", tag: "Thiết kế hệ thống" },
+          { title: "Nielsen Norman Group — Cross-Device User Experience", url: "https://www.nngroup.com/", tag: "Nghiên cứu UX" }
+        ],
+        defaultNote: "• Ý chính: Hệ điều hành hiện đại xóa nhòa ranh giới giữa máy tính để bàn và thiết bị cảm ứng.\n• Điểm khác biệt: Desktop ưu tiên độ chính xác con trỏ; Tablet ưu tiên vùng chạm lớn và thao tác vuốt tự nhiên.\n• Ứng dụng: Giúp giảm thiểu thời gian làm quen (Learning Curve thấp) khi làm việc đa thiết bị.",
+        tags: ["#TraiNghiemLienMach", "#DesktopMode", "#TabletMode", "#AdaptiveUI"]
+      },
+      {
+        id: 3,
+        shortTitle: "Slide 03: Cách mạng số",
+        category: "Tư duy Lập trình & Kỷ nguyên số",
+        topicTag: "SLIDE 03 • BỐI CẢNH THỜI ĐẠI SỐ",
+        title: "Bối cảnh cuộc cách mạng số",
+        subtitle: "Máy tính và phần mềm đang vận hành toàn bộ thế giới hiện đại.",
+        description: "Từ hệ thống điện toán đám mây (the cloud) khổng lồ đến các dịch vụ tài chính, giao thông và thiết bị đeo cá nhân, mọi lĩnh vực đều đang được số hóa sâu rộng.",
+        bullets: [
+          "Hạ tầng đám mây (Cloud) kết nối mạng lưới toàn cầu",
+          "Số hóa các dịch vụ tài chính, y tế & giao thông cốt lõi",
+          "Năng lực tính toán hiện diện trong mọi thiết bị cá nhân",
+          "Cần hiểu cách giao tiếp với máy tính để làm chủ công nghệ"
+        ],
+        svgCaption: "Mạng lưới kết nối toàn cầu & Hệ sinh thái thiết bị thông minh cá nhân",
+        svg: `
+          <svg viewBox="0 0 420 260" class="w-full h-auto" role="img" aria-label="Bối cảnh cuộc cách mạng số toàn cầu và thiết bị cá nhân">
+            <!-- Khung trái: Mạng lưới toàn cầu -->
+            <rect x="14" y="20" width="215" height="175" rx="14" fill="#0b203d" stroke="#38bdf8" stroke-opacity="0.45"/>
+            <text x="121" y="42" text-anchor="middle" fill="#7dd3fc" font-size="11" font-weight="700">Hạ tầng Đám mây Toàn cầu</text>
+            <!-- Đường kết nối các châu lục (nodes) -->
+            <polyline points="42,82 88,96 135,74 182,92 204,126" fill="none" stroke="#38bdf8" stroke-width="1.8"/>
+            <polyline points="88,96 105,142 156,154 195,165" fill="none" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <circle cx="42" cy="82" r="5" fill="#38bdf8"/>
+            <circle cx="88" cy="96" r="6" fill="#fbbf24"/>
+            <circle cx="135" cy="74" r="5" fill="#38bdf8"/>
+            <circle cx="182" cy="92" r="5" fill="#38bdf8"/>
+            <circle cx="204" cy="126" r="6" fill="#fbbf24"/>
+            <circle cx="105" cy="142" r="5" fill="#22d3ee"/>
+            <circle cx="156" cy="154" r="5" fill="#22d3ee"/>
+            <circle cx="195" cy="165" r="5" fill="#38bdf8"/>
+            <text x="121" y="182" text-anchor="middle" fill="#94a3b8" font-size="9.5">Tài chính • Giao thông • Cloud</text>
+
+            <!-- Đường truyền từ Cloud tới thiết bị cá nhân -->
+            <line x1="204" y1="126" x2="262" y2="126" stroke="#fbbf24" stroke-width="2.5"/>
+            <circle cx="233" cy="126" r="4" fill="#fbbf24"/>
+
+            <!-- Khung phải: Smartphone & Smartwatch -->
+            <rect x="255" y="20" width="150" height="175" rx="14" fill="#0b203d" stroke="#fbbf24" stroke-opacity="0.45"/>
+            <!-- Smartphone -->
+            <rect x="315" y="42" width="66" height="122" rx="12" fill="#071426" stroke="#38bdf8" stroke-width="2"/>
+            <line x1="340" y1="50" x2="356" y2="50" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+            <!-- Smartwatch chồng phía trước -->
+            <rect x="282" y="64" width="16" height="78" rx="4" fill="#1e293b"/>
+            <rect x="270" y="76" width="40" height="54" rx="10" fill="#0f294a" stroke="#fbbf24" stroke-width="2"/>
+            <line x1="290" y1="103" x2="290" y2="91" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="290" y1="103" x2="299" y2="108" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
+            <text x="330" y="182" text-anchor="middle" fill="#fde68a" font-size="9.5" font-weight="600">Thiết bị số cá nhân</text>
+
+            <!-- Thông điệp dưới cùng -->
+            <rect x="14" y="208" width="391" height="36" rx="10" fill="#091b34" stroke="#fbbf24" stroke-opacity="0.25"/>
+            <text x="210" y="230" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="600">Hiểu cách giao tiếp với máy tính là chìa khóa để làm chủ công nghệ</text>
+          </svg>
+        `,
+        files: [
+          { ext: "PDF", color: "rose", name: "Bao_cao_Chuyen_doi_so_va_Kinh_te_So.pdf", desc: "Tổng quan tác động của điện toán đám mây và phần mềm tới hạ tầng toàn cầu.", preview: "Trong kỷ nguyên số, phần mềm đóng vai trò là hạ tầng cốt lõi của nền kinh tế: từ thanh toán không tiền mặt, logistics thông minh đến y tế số và giáo dục trực tuyến." },
+          { ext: "DOCX", color: "blue", name: "Phan_biet_Tin_hoc_hoa_va_Chuyen_doi_so.docx", desc: "Tài liệu phân tích sự khác biệt giữa số hóa dữ liệu và đổi mới mô hình vận hành.", preview: "Tin học hóa chỉ đưa dữ liệu giấy lên máy tính (không đổi quy trình); Chuyển đổi số tái cấu trúc toàn diện quy trình và tạo ra giá trị dịch vụ mới trên nền tảng số." },
+          { ext: "PDF", color: "amber", name: "Tu_duy_May_tinh_Computational_Thinking.pdf", desc: "Phương pháp giao tiếp và giải quyết vấn đề cùng hệ thống máy tính.", preview: "4 trụ cột của Tư duy máy tính: Phân rã vấn đề (Decomposition), Nhận diện khuôn mẫu (Pattern Recognition), Trừu tượng hóa (Abstraction) và Thiết kế thuật toán (Algorithms)." }
+        ],
+        media: {
+          imageTitle: "Bản đồ kết nối hạ tầng Cloud & Thiết bị cá nhân thông minh",
+          videoTitle: "Bài giảng số 03: Bối cảnh cuộc cách mạng số & Tư duy máy tính (09:15)",
+          videoSummary: "Phân tích lý do vì sao năng lực tính toán đã len lỏi vào mọi thiết bị cá nhân từ điện thoại, đồng hồ thông minh đến ô tô, đòi hỏi người học phải biết cách giao tiếp với công nghệ."
+        },
+        links: [
+          { title: "World Economic Forum — Báo cáo Tương lai Việc làm & Kinh tế số", url: "https://www.weforum.org/", tag: "Báo cáo quốc tế" },
+          { title: "Cổng Chuyển đổi số Quốc gia Việt Nam", url: "https://dx.gov.vn/", tag: "Chính thống" },
+          { title: "Google for Education — Computational Thinking", url: "https://edu.google.com/", tag: "Tư duy số" }
+        ],
+        defaultNote: "• Ý chính: Phần mềm và điện toán đám mây đang vận hành mọi hạ tầng thiết yếu của thế giới.\n• Bài học rút ra: Không chỉ là người tiêu dùng công nghệ thụ động, mỗi cá nhân cần hiểu tư duy lập trình/máy tính để làm chủ thiết bị số.\n• Liên hệ thực tế: Sự khác biệt giữa Tin học hóa (số hóa dữ liệu) và Chuyển đổi số (đổi mới mô hình).",
+        tags: ["#CachMangSo", "#CloudComputing", "#ChuyenDoiSo", "#ThietBiCaNhan"]
+      },
+      {
+        id: 4,
+        shortTitle: "Slide 04: Tự động hóa HR",
+        category: "Tự động hóa trong lĩnh vực IT",
+        topicTag: "SLIDE 04 • ỨNG DỤNG THỰC TẾ DOANH NGHIỆP",
+        title: "Ứng dụng thực tế: Quản trị Nhân sự",
+        subtitle: "Tự động hóa quy trình Onboarding nhân viên mới.",
+        description: "Chuyển đổi từ quy trình giấy tờ thủ công tốn hàng tuần chờ đợi sang hệ thống tự động nhận diện dữ liệu nhân sự, cấp tài khoản và khởi động đào tạo ngay ngày đầu tiên.",
+        bullets: [
+          "Trạng thái Cũ: Xử lý hồ sơ giấy thủ công, dễ sai sót",
+          "Trạng thái Mới: Kích hoạt tự động từ cơ sở dữ liệu HR",
+          "Tự động tạo Tài khoản Email & Quyền truy cập hệ thống",
+          "Khởi động ngay Quy trình Đào tạo trực tuyến"
+        ],
+        svgCaption: "So sánh Trạng thái Cũ (Thủ công) & Trạng thái Mới (Tự động hóa Onboarding)",
+        svg: `
+          <svg viewBox="0 0 420 260" class="w-full h-auto" role="img" aria-label="Tự động hóa quy trình Onboarding nhân sự">
+            <!-- Nửa trên: Trạng thái Cũ -->
+            <rect x="14" y="14" width="392" height="84" rx="12" fill="#182234" stroke="#64748b" stroke-opacity="0.5"/>
+            <text x="28" y="34" fill="#cbd5e1" font-size="11" font-weight="700">Trạng thái Cũ (Thủ công)</text>
+            <text x="28" y="54" fill="#94a3b8" font-size="9.5">• Nhập liệu rời rạc, chồng chất hồ sơ giấy</text>
+            <text x="28" y="70" fill="#94a3b8" font-size="9.5">• Chờ đợi bộ phận IT cấp quyền mất nhiều ngày</text>
+            <!-- Biểu tượng đồng hồ & chồng hồ sơ -->
+            <circle cx="348" cy="56" r="22" fill="#0f172a" stroke="#94a3b8" stroke-width="1.5"/>
+            <line x1="348" y1="56" x2="348" y2="43" stroke="#cbd5e1" stroke-width="2"/>
+            <line x1="348" y1="56" x2="358" y2="60" stroke="#cbd5e1" stroke-width="2"/>
+
+            <!-- Nửa dưới: Trạng thái Mới (Tự động hóa) -->
+            <rect x="14" y="110" width="392" height="136" rx="12" fill="#0b2442" stroke="#38bdf8" stroke-width="1.6"/>
+            <text x="28" y="130" fill="#38bdf8" font-size="11" font-weight="700">Trạng thái Mới (Tự động hóa Onboarding)</text>
+
+            <!-- Thẻ Employee ID -->
+            <rect x="28" y="146" width="94" height="68" rx="8" fill="#071426" stroke="#fbbf24" stroke-width="1.5"/>
+            <circle cx="52" cy="172" r="10" fill="#38bdf8" fill-opacity="0.3"/>
+            <rect x="68" y="164" width="44" height="5" rx="2" fill="#e2e8f0"/>
+            <rect x="68" y="174" width="34" height="4" rx="2" fill="#94a3b8"/>
+            <text x="75" y="202" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="700">Employee ID</text>
+
+            <!-- 3 luồng tự động hóa -->
+            <line x1="122" y1="164" x2="188" y2="146" stroke="#38bdf8" stroke-width="2"/>
+            <line x1="122" y1="180" x2="188" y2="180" stroke="#22d3ee" stroke-width="2"/>
+            <line x1="122" y1="196" x2="188" y2="214" stroke="#34d399" stroke-width="2"/>
+
+            <!-- 3 đích đến -->
+            <rect x="190" y="134" width="198" height="24" rx="6" fill="#071426" stroke="#34d399" stroke-opacity="0.6"/>
+            <text x="202" y="150" fill="#a7f3d0" font-size="9.5" font-weight="600">✓ Tự động tạo Tài khoản Email</text>
+
+            <rect x="190" y="168" width="198" height="24" rx="6" fill="#071426" stroke="#38bdf8" stroke-opacity="0.6"/>
+            <text x="202" y="184" fill="#bae6fd" font-size="9.5" font-weight="600">✓ Cấp Quyền truy cập Hệ thống</text>
+
+            <rect x="190" y="202" width="198" height="24" rx="6" fill="#071426" stroke="#fbbf24" stroke-opacity="0.6"/>
+            <text x="202" y="218" fill="#fde68a" font-size="9.5" font-weight="600">✓ Kích hoạt Quy trình Đào tạo</text>
+          </svg>
+        `,
+        files: [
+          { ext: "PDF", color: "rose", name: "Quy_trinh_Tu_dong_hoa_Onboarding_HR.pdf", desc: "Tài liệu thiết kế luồng Trigger → Script → Workflow trong quản trị nhân sự.", preview: "Khi hồ sơ nhân sự mới chuyển sang trạng thái 'Đã ký hợp đồng' (Trigger), Workflow Engine tự động gọi API tới Active Directory để tạo email, phân quyền thư mục và gửi khóa học hội nhập." },
+          { ext: "DOCX", color: "blue", name: "Kich_ban_Automation_Scripts_HR.docx", desc: "Mô tả chi tiết kịch bản cấp phát tài khoản và thu hồi quyền tự động.", preview: "Lợi ích định lượng: Giảm 85% thời gian chờ đợi của nhân viên mới, loại bỏ 100% lỗi gõ sai họ tên/phòng ban khi tạo tài khoản thủ công." },
+          { ext: "XLSX", color: "emerald", name: "Bang_Kiem_soat_Phan_quyen_Role_Matrix.xlsx", desc: "Ma trận phân quyền tự động theo từng vị trí công việc (Marketing, Sales, IT).", preview: "Ánh xạ tự động theo chức danh: Nhân viên Sales tự động có quyền truy cập CRM; Nhân viên Marketing tự động vào nhóm công cụ thiết kế & phân tích." }
+        ],
+        media: {
+          imageTitle: "Sơ đồ đối chiếu quy trình Onboarding Thủ công vs Tự động hóa",
+          videoTitle: "Bài giảng số 04: Tự động hóa quy trình nhân sự với Low-code & API (07:30)",
+          videoSummary: "Minh họa cách kết nối biểu mẫu tuyển dụng với hệ thống quản lý tài khoản doanh nghiệp thông qua các nền tảng tự động hóa như Power Automate / Zapier / n8n."
+        },
+        links: [
+          { title: "Microsoft Power Automate — Tự động hóa quy trình HR", url: "https://learn.microsoft.com/vi-vn/power-automate/", tag: "Nền tảng Low-code" },
+          { title: "n8n Workflow Automation — Tài liệu kết nối API", url: "https://docs.n8n.io/", tag: "Tự động hóa" },
+          { title: "Harvard Business Review — Digital HR Transformation", url: "https://hbr.org/", tag: "Quản trị" }
+        ],
+        defaultNote: "• Ý chính: Tự động hóa giúp giải phóng con người khỏi các tác vụ IT lặp lại theo nguyên lý chuỗi phản ứng (Trigger → Scripts → Workflows).\n• Ví dụ điển hình: Quy trình Onboarding tự động tạo Email, cấp quyền truy cập và gửi tài liệu đào tạo ngay khi có Employee ID mới.\n• Giá trị: Tiết kiệm hàng tuần chờ đợi và tăng tính bảo mật phân quyền.",
+        tags: ["#TuDongHoa", "#HRAutomation", "#Onboarding", "#Workflow"]
+      },
+      {
+        id: 5,
+        shortTitle: "Slide 05: Prompt là gì?",
+        category: "Trí tuệ nhân tạo & Prompt Engineering",
+        topicTag: "SLIDE 05 • GIAO TIẾP VỚI TRÍ TUỆ NHÂN TẠO",
+        title: "Prompt là gì?",
+        subtitle: "Đầu vào (Input) bạn cung cấp cho mô hình AI để trích xuất phản hồi cụ thể.",
+        description: "Prompt đóng vai trò như bảng điều khiển và vô lăng dẫn hướng cho cỗ máy AI mạnh mẽ bên trong: chất lượng câu lệnh đầu vào quyết định trực tiếp độ chính xác của đầu ra.",
+        bullets: [
+          "Bản đồ dẫn đường: Dẫn dắt AI tới kết quả mong muốn",
+          "Đa dạng hình thức: Câu hỏi, từ khóa, đoạn mã, dữ liệu",
+          "Tác động trực tiếp: Quyết định 100% chất lượng Output",
+          "Chuyển dịch từ ra lệnh cứng sang giao tiếp ngôn ngữ tự nhiên"
+        ],
+        svgCaption: "Ẩn dụ Bảng điều khiển (Prompt) điều hướng Động cơ xử lý AI (Output)",
+        svg: `
+          <svg viewBox="0 0 420 260" class="w-full h-auto" role="img" aria-label="Prompt là bảng điều khiển dẫn hướng mô hình AI">
+            <!-- Bảng điều khiển bên trái (Prompt Input) -->
+            <rect x="16" y="26" width="184" height="145" rx="14" fill="#0b2240" stroke="#38bdf8" stroke-width="1.8"/>
+            <text x="108" y="48" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="700">Bảng điều khiển (Prompt)</text>
+            <!-- Vô lăng định hướng -->
+            <circle cx="66" cy="105" r="28" fill="none" stroke="#fbbf24" stroke-width="3.5"/>
+            <circle cx="66" cy="105" r="8" fill="#38bdf8"/>
+            <line x1="38" y1="105" x2="94" y2="105" stroke="#fbbf24" stroke-width="3"/>
+            <line x1="66" y1="105" x2="66" y2="133" stroke="#fbbf24" stroke-width="3"/>
+            <!-- Màn hình câu lệnh -->
+            <rect x="108" y="66" width="80" height="78" rx="8" fill="#071426" stroke="#334155"/>
+            <rect x="116" y="76" width="54" height="5" rx="2" fill="#38bdf8"/>
+            <rect x="116" y="88" width="62" height="5" rx="2" fill="#fbbf24"/>
+            <rect x="116" y="100" width="46" height="5" rx="2" fill="#34d399"/>
+            <rect x="116" y="114" width="60" height="18" rx="4" fill="#1e3a5f"/>
+            <text x="146" y="126" text-anchor="middle" fill="#bae6fd" font-size="8" font-weight="600">INPUT</text>
+
+            <!-- Trục truyền động ở giữa -->
+            <line x1="200" y1="98" x2="246" y2="98" stroke="#fbbf24" stroke-width="2.5"/>
+            <polygon points="246,93 256,98 246,103" fill="#fbbf24"/>
+
+            <!-- Động cơ xử lý bên phải (AI Model) -->
+            <rect x="256" y="26" width="148" height="145" rx="14" fill="#0b2240" stroke="#22d3ee" stroke-width="1.8"/>
+            <text x="330" y="48" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="700">Động cơ AI (LLM)</text>
+            <!-- Bánh răng xử lý -->
+            <circle cx="315" cy="98" r="24" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="6 4"/>
+            <circle cx="315" cy="98" r="10" fill="#38bdf8" fill-opacity="0.3"/>
+            <circle cx="356" cy="122" r="16" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="5 3"/>
+            <text x="330" y="156" text-anchor="middle" fill="#fde68a" font-size="9.5" font-weight="600">Trích xuất Output chính xác</text>
+
+            <!-- 3 trụ cột phía dưới -->
+            <rect x="16" y="186" width="122" height="56" rx="10" fill="#091b34" stroke="#38bdf8" stroke-opacity="0.35"/>
+            <text x="77" y="208" text-anchor="middle" fill="#38bdf8" font-size="10" font-weight="700">Bản đồ dẫn đường</text>
+            <text x="77" y="225" text-anchor="middle" fill="#94a3b8" font-size="8.5">Định hướng kết quả</text>
+
+            <rect x="149" y="186" width="122" height="56" rx="10" fill="#091b34" stroke="#22d3ee" stroke-opacity="0.35"/>
+            <text x="210" y="208" text-anchor="middle" fill="#22d3ee" font-size="10" font-weight="700">Đa dạng hình thức</text>
+            <text x="210" y="225" text-anchor="middle" fill="#94a3b8" font-size="8.5">Văn bản, Code, Dữ liệu</text>
+
+            <rect x="282" y="186" width="122" height="56" rx="10" fill="#091b34" stroke="#fbbf24" stroke-opacity="0.35"/>
+            <text x="343" y="208" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">Tác động trực tiếp</text>
+            <text x="343" y="225" text-anchor="middle" fill="#94a3b8" font-size="8.5">Quyết định chất lượng</text>
+          </svg>
+        `,
+        files: [
+          { ext: "PDF", color: "rose", name: "Cam_nang_Prompt_Engineering_Co_ban.pdf", desc: "Tài liệu nhập môn về cách thức hoạt động của Mô hình Ngôn ngữ Lớn (LLM) và Prompt.", preview: "Mô hình AI hoạt động dựa trên xác suất dự đoán chuỗi token tiếp theo. Do đó, Prompt càng rõ ràng về mục tiêu và phạm vi thì AI càng thu hẹp không gian tìm kiếm để trả về kết quả chính xác." },
+          { ext: "DOCX", color: "blue", name: "Bo_Suu_tap_50_Mau_Prompt_Hoc_tap.docx", desc: "Tổng hợp mẫu câu lệnh phục vụ tóm tắt tài liệu, dịch thuật, viết mã và phân tích.", preview: "Các nhóm Prompt ứng dụng: (1) Zero-shot cho tác vụ nhanh; (2) Few-shot khi cần văn phong đặc thù; (3) Chain-of-Thought cho bài toán suy luận logic từng bước." },
+          { ext: "TXT", color: "emerald", name: "Quy_tac_Vang_Giao_tiep_AI.txt", desc: "Ghi chú nhanh các nguyên tắc tránh ảo giác thông tin (Hallucination).", preview: "Luôn kiểm chứng số liệu từ AI; cung cấp tài liệu nguồn tham chiếu; chia nhỏ yêu cầu phức tạp thành từng bước tuần tự." }
+        ],
+        media: {
+          imageTitle: "Sơ đồ trực quan: Prompt điều khiển mô hình AI tạo đầu ra",
+          videoTitle: "Bài giảng số 05: Hiểu đúng bản chất Prompt & Tư duy Prompt Engineer (08:10)",
+          videoSummary: "Giải thích trực quan vì sao người dùng không chỉ 'hỏi' AI mà đang đóng vai trò kiến trúc sư lập trình hành vi của AI thông qua ngôn ngữ tự nhiên."
+        },
+        links: [
+          { title: "Google AI for Developers — Prompt Design Strategies", url: "https://ai.google.dev/gemini-api/docs/prompting-strategies", tag: "Hướng dẫn chính thức" },
+          { title: "OpenAI Prompt Engineering Guide", url: "https://platform.openai.com/docs/guides/prompt-engineering", tag: "Kỹ thuật AI" },
+          { title: "Learn Prompting — Khóa học mở về Prompting", url: "https://learnprompting.org/", tag: "Học liệu mở" }
+        ],
+        defaultNote: "• Ý chính: Prompt là đầu vào (Input) định hướng cho AI; chất lượng Prompt quyết định trực tiếp chất lượng Output.\n• Ba đặc trưng: Là bản đồ dẫn đường, đa dạng hình thức (câu hỏi, code, dữ liệu) và tác động trực tiếp.\n• Tư duy cốt lõi: Bối cảnh là Vua — cung cấp thông tin nền tảng rõ ràng sẽ tránh được câu trả lời chung chung.",
+        tags: ["#PromptLaGi", "#PromptEngineering", "#GenerativeAI", "#LLM"]
+      },
+      {
+        id: 6,
+        shortTitle: "Slide 06: Giải phẫu Prompt",
+        category: "Trí tuệ nhân tạo & Prompt Engineering",
+        topicTag: "SLIDE 06 • CẤU TRÚC CÂU LỆNH CHUẨN HÓA",
+        title: "Giải phẫu một Prompt hoàn chỉnh",
+        subtitle: "4 thành phần cốt lõi tạo nên câu lệnh AI hiệu quả cao.",
+        description: "Không phải mọi câu lệnh đều cần đủ cả 4 yếu tố, nhưng với các nhiệm vụ học thuật và công việc phức tạp, cấu trúc 4 lớp giúp AI hiểu đúng ý định ngay từ lần đầu.",
+        bullets: [
+          "1. Ngữ cảnh (Context): Vai trò & thông tin nền tảng",
+          "2. Chỉ thị cốt lõi (Instruction): Nhiệm vụ cụ thể cần làm",
+          "3. Ví dụ (Examples): Mẫu đầu vào / đầu ra mong muốn",
+          "4. Định dạng (Format): Cấu trúc trình bày kết quả cuối"
+        ],
+        svgCaption: "Cấu trúc 4 lớp của một Prompt hoàn chỉnh (Context → Instruction → Examples → Format)",
+        svg: `
+          <svg viewBox="0 0 420 260" class="w-full h-auto" role="img" aria-label="Giải phẫu 4 thành phần của một Prompt hoàn chỉnh">
+            <!-- Khung thư mục Prompt -->
+            <path d="M 24 28 L 130 28 L 146 44 L 396 44 L 396 242 L 24 242 Z" fill="#0a1e38" stroke="#38bdf8" stroke-width="1.6"/>
+            <text x="40" y="39" fill="#7dd3fc" font-size="10" font-weight="700">PROMPT_CHUAN.txt</text>
+
+            <!-- Lớp 1: Context -->
+            <rect x="42" y="56" width="336" height="38" rx="8" fill="#0f2d52" stroke="#38bdf8" stroke-width="1.4"/>
+            <text x="54" y="72" fill="#38bdf8" font-size="10.5" font-weight="700">1. Ngữ cảnh (Context)</text>
+            <text x="54" y="86" fill="#cbd5e1" font-size="9">VD: “Bạn là chuyên gia phân tích tài chính doanh nghiệp...”</text>
+
+            <!-- Lớp 2: Instruction -->
+            <rect x="42" y="102" width="336" height="38" rx="8" fill="#162844" stroke="#94a3b8" stroke-width="1.4"/>
+            <text x="54" y="118" fill="#ffffff" font-size="10.5" font-weight="700">2. Chỉ thị cốt lõi (Instruction)</text>
+            <text x="54" y="132" fill="#cbd5e1" font-size="9">VD: “Hãy tóm tắt báo cáo doanh thu quý 3 theo 3 nhóm...”</text>
+
+            <!-- Lớp 3: Examples -->
+            <rect x="42" y="148" width="336" height="38" rx="8" fill="#0d3331" stroke="#34d399" stroke-width="1.4"/>
+            <text x="54" y="164" fill="#34d399" font-size="10.5" font-weight="700">3. Ví dụ (Examples / Few-shot)</text>
+            <text x="54" y="178" fill="#cbd5e1" font-size="9">VD: “Định dạng mẫu: Mục 1 - [Chỉ số] - [Nhận xét ngắn]”</text>
+
+            <!-- Lớp 4: Format -->
+            <rect x="42" y="194" width="336" height="38" rx="8" fill="#332218" stroke="#fbbf24" stroke-width="1.4"/>
+            <text x="54" y="210" fill="#fbbf24" font-size="10.5" font-weight="700">4. Định dạng (Format)</text>
+            <text x="54" y="224" fill="#cbd5e1" font-size="9">VD: “Trả về kết quả dưới dạng bảng Markdown 3 cột.”</text>
+          </svg>
+        `,
+        files: [
+          { ext: "PDF", color: "rose", name: "Khung_Cau_truc_Prompt_4_Lop_CIEF.pdf", desc: "Phân tích chi tiết vai trò của Context, Instruction, Examples và Format.", preview: "Công thức C-I-E-F: Context thiết lập góc nhìn chuyên môn; Instruction xác định động từ hành động; Examples khóa chặt văn phong; Format giúp dữ liệu đầu ra sẵn sàng dùng ngay." },
+          { ext: "DOCX", color: "blue", name: "Bai_tap_Thuc_hanh_Viet_Prompt_Hoan_chinh.docx", desc: "So sánh kết quả trước và sau khi bổ sung đầy đủ 4 thành phần vào câu lệnh.", preview: "Thử nghiệm thực tế: Prompt chỉ có Instruction cho kết quả chung chung dài 400 chữ; Prompt đủ 4 thành phần cho bảng tổng hợp cô đọng, đúng trọng tâm chỉ sau 1 lần chạy." },
+          { ext: "JSON", color: "amber", name: "Template_Prompt_Chuan_Hoa.json", desc: "Mẫu cấu trúc dữ liệu Prompt có thể tái sử dụng trong ứng dụng AI.", preview: "{ \"context\": \"Giảng viên CNTT\", \"instruction\": \"Giải thích khái niệm\", \"examples\": [\"Input -> Output\"], \"format\": \"Danh sách gạch đầu dòng\" }" }
+        ],
+        media: {
+          imageTitle: "Sơ đồ giải phẫu 4 lớp của một Prompt hoàn chỉnh",
+          videoTitle: "Bài giảng số 06: Thực hành nâng cấp câu lệnh theo mô hình 4 thành phần (07:50)",
+          videoSummary: "Hướng dẫn từng bước biến một câu hỏi sơ sài thành một Prompt có Ngữ cảnh, Chỉ thị rõ ràng, Ví dụ mẫu và Định dạng đầu ra chuẩn xác."
+        },
+        links: [
+          { title: "Anthropic Prompt Library — Thư viện mẫu Prompt cấu trúc", url: "https://docs.anthropic.com/en/prompt-library/library", tag: "Thư viện mẫu" },
+          { title: "Prompting Guide — Kỹ thuật Few-shot & Formatting", url: "https://www.promptingguide.ai/", tag: "Cẩm nang" },
+          { title: "Google Workspace AI — Hướng dẫn viết Prompt công việc", url: "https://workspace.google.com/", tag: "Ứng dụng" }
+        ],
+        defaultNote: "• 4 mảnh ghép của Prompt hoàn chỉnh: (1) Ngữ cảnh (Context), (2) Chỉ thị cốt lõi (Instruction), (3) Ví dụ (Examples), (4) Định dạng (Format).\n• Lưu ý quan trọng: Tác vụ đơn giản chỉ cần Chỉ thị; tác vụ phức tạp bắt buộc phải có Ngữ cảnh và Định dạng rõ ràng.\n• Kết hợp với vòng lặp tinh chỉnh để đạt kết quả tối ưu.",
+        tags: ["#GiaiPhauPrompt", "#Context", "#Instruction", "#FewShot", "#Format"]
+      },
+      {
+        id: 7,
+        shortTitle: "Slide 07: Kiến trúc Phần cứng",
+        category: "Kiến trúc Máy tính & Phần cứng",
+        topicTag: "SLIDE 07 • NỀN TẢNG VẬT LÝ HỆ THỐNG",
+        title: "Kiến trúc và Phần cứng máy tính",
+        subtitle: "Cấu trúc Von Neumann và sự phối hợp giữa CPU, Bộ nhớ và Thiết bị Nhập/Xuất.",
+        description: "Mọi hệ điều hành và phần mềm AI đều vận hành trên nền tảng phần cứng vật lý gồm Khối xử lý trung tâm (CPU), Bộ nhớ trong/ngoài và Hệ thống Bus truyền dẫn dữ liệu.",
+        bullets: [
+          "CPU (Bộ xử lý trung tâm): Khối điều khiển CU & Khối tính toán ALU",
+          "Bộ nhớ chính (RAM): Lưu trữ dữ liệu & lệnh đang thực thi tốc độ cao",
+          "Bộ nhớ lưu trữ (SSD/HDD): Lưu trữ bền vững thư viện số lâu dài",
+          "Hệ thống Bus & I/O: Kết nối thiết bị ngoại vi và mạng truyền thông"
+        ],
+        svgCaption: "Sơ đồ khối Kiến trúc Máy tính (Input → CPU [CU + ALU] ↔ RAM/SSD → Output)",
+        svg: `
+          <svg viewBox="0 0 420 260" class="w-full h-auto" role="img" aria-label="Sơ đồ khối kiến trúc phần cứng máy tính">
+            <!-- Thiết bị Nhập (Input) -->
+            <rect x="16" y="75" width="84" height="70" rx="12" fill="#0b2240" stroke="#38bdf8" stroke-width="1.6"/>
+            <text x="58" y="106" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Thiết bị</text>
+            <text x="58" y="122" text-anchor="middle" fill="#7dd3fc" font-size="10.5" font-weight="600">NHẬP (Input)</text>
+
+            <!-- Mũi tên Input -> CPU -->
+            <line x1="100" y1="110" x2="140" y2="110" stroke="#38bdf8" stroke-width="2.2"/>
+            <polygon points="140,105 148,110 140,115" fill="#38bdf8"/>
+
+            <!-- Khối trung tâm CPU -->
+            <rect x="148" y="34" width="124" height="132" rx="14" fill="#0f294a" stroke="#fbbf24" stroke-width="2"/>
+            <text x="210" y="56" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="800">CPU</text>
+            <!-- CU -->
+            <rect x="162" y="66" width="96" height="36" rx="8" fill="#071426" stroke="#38bdf8"/>
+            <text x="210" y="83" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="700">Khối Điều khiển (CU)</text>
+            <text x="210" y="96" text-anchor="middle" fill="#94a3b8" font-size="8">Giải mã &amp; Điều phối lệnh</text>
+            <!-- ALU -->
+            <rect x="162" y="110" width="96" height="36" rx="8" fill="#071426" stroke="#22d3ee"/>
+            <text x="210" y="127" text-anchor="middle" fill="#e2e8f0" font-size="10" font-weight="700">Khối Số học (ALU)</text>
+            <text x="210" y="140" text-anchor="middle" fill="#94a3b8" font-size="8">Tính toán &amp; Logic</text>
+
+            <!-- Mũi tên CPU -> Output -->
+            <line x1="272" y1="110" x2="312" y2="110" stroke="#38bdf8" stroke-width="2.2"/>
+            <polygon points="312,105 320,110 312,115" fill="#38bdf8"/>
+
+            <!-- Thiết bị Xuất (Output) -->
+            <rect x="320" y="75" width="84" height="70" rx="12" fill="#0b2240" stroke="#38bdf8" stroke-width="1.6"/>
+            <text x="362" y="106" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Thiết bị</text>
+            <text x="362" y="122" text-anchor="middle" fill="#7dd3fc" font-size="10.5" font-weight="600">XUẤT (Output)</text>
+
+            <!-- Bus hai chiều xuống Bộ nhớ RAM & SSD -->
+            <line x1="210" y1="166" x2="210" y2="196" stroke="#34d399" stroke-width="2.2"/>
+            <rect x="115" y="196" width="190" height="46" rx="10" fill="#0b2240" stroke="#34d399" stroke-width="1.6"/>
+            <text x="210" y="216" text-anchor="middle" fill="#6ee7b7" font-size="10.5" font-weight="700">Bộ nhớ trong (RAM) &amp; Lưu trữ (SSD)</text>
+            <text x="210" y="232" text-anchor="middle" fill="#94a3b8" font-size="8.5">Lưu trữ chương trình và dữ liệu thực thi</text>
+          </svg>
+        `,
+        files: [
+          { ext: "PDF", color: "rose", name: "Kien_truc_May_tinh_Von_Neumann.pdf", desc: "Tài liệu nền tảng về nguyên lý chương trình lưu trữ, chu kỳ nạp-giải mã-thực thi.", preview: "Chu kỳ lệnh CPU (Instruction Cycle): (1) Fetch — Nạp lệnh từ RAM; (2) Decode — Khối CU giải mã lệnh; (3) Execute — Khối ALU thực hiện phép tính và ghi kết quả." },
+          { ext: "DOCX", color: "blue", name: "Phan_tich_Phan_cung_CPU_GPU_NPU.docx", desc: "So sánh kiến trúc xử lý tuần tự (CPU) và xử lý song song cho AI (GPU/NPU).", preview: "Trong kỷ nguyên AI, bên cạnh CPU đa nhân, máy tính hiện đại tích hợp thêm GPU và NPU chuyên biệt để tăng tốc tính toán ma trận và mạng nơ-ron." },
+          { ext: "XLSX", color: "emerald", name: "Thong_so_Phan_cap_Bo_nho_Cache_RAM_SSD.xlsx", desc: "Bảng đối chiếu tốc độ truy xuất, dung lượng và chi phí các tầng bộ nhớ.", preview: "Phân cấp bộ nhớ: Thanh ghi (Registers) → Bộ nhớ đệm (L1/L2/L3 Cache) → RAM (DDR5) → Ổ cứng thể rắn (NVMe SSD) → Lưu trữ đám mây." }
+        ],
+        media: {
+          imageTitle: "Sơ đồ khối Kiến trúc Máy tính & Phân cấp Bộ nhớ",
+          videoTitle: "Bài giảng số 07: Bên trong CPU — Cách máy tính xử lý hàng tỷ phép tính/giây (09:40)",
+          videoSummary: "Mô phỏng trực quan dòng dữ liệu di chuyển qua System Bus giữa ổ cứng SSD, bộ nhớ RAM và các đơn vị điều khiển CU, tính toán ALU bên trong vi xử lý."
+        },
+        links: [
+          { title: "Intel Architecture — Tài liệu kỹ thuật vi xử lý & phần cứng", url: "https://www.intel.com/content/www/us/en/developer/overview.html", tag: "Kỹ thuật phần cứng" },
+          { title: "Computer History Museum — Kiến trúc Von Neumann", url: "https://www.computerhistory.org/", tag: "Lịch sử & Kiến trúc" },
+          { title: "GeeksforGeeks — Computer Organization and Architecture", url: "https://www.geeksforgeeks.org/computer-organization-and-architecture-tutorials/", tag: "Học thuật" }
+        ],
+        defaultNote: "• Ý chính: Kiến trúc máy tính hiện đại dựa trên nguyên lý Von Neumann với 4 khối cơ bản: Nhập, Xuất, Xử lý trung tâm (CPU) và Bộ nhớ.\n• Điểm cần nhớ: CPU gồm CU (điều khiển) và ALU (tính toán); RAM lưu dữ liệu tạm thời tốc độ cao, SSD lưu dữ liệu lâu dài.\n• Xu hướng mới: Tích hợp thêm nhân NPU chuyên dụng xử lý AI ngay trên thiết bị.",
+        tags: ["#KienTrucMayTinh", "#PhanCung", "#CPU", "#RAM", "#VonNeumann"]
+      },
+      {
+        id: 8,
+        shortTitle: "Slide 08: Thế hệ máy tính",
+        category: "Kiến trúc Máy tính & Tương lai",
+        topicTag: "SLIDE 08 • HÀNH TRÌNH 70 NĂM TIẾN HÓA",
+        title: "Các thế hệ máy tính và Tương lai",
+        subtitle: "Hành trình 70 năm từ những cỗ máy khổng lồ đến kỷ nguyên AI và kiến trúc chuyên biệt.",
+        description: "Từ những cỗ máy đèn điện tử chân không nặng hàng chục tấn như ENIAC đến vi mạch bán dẫn siêu nhỏ trên đầu ngón tay và máy tính lượng tử, AI trong tương lai.",
+        bullets: [
+          "Thế hệ 1–2 (1940s–1960s): Đèn điện tử chân không → Bóng bán dẫn",
+          "Thế hệ 3–4 (1960s–Nay): Mạch tích hợp (IC) → Bộ vi xử lý (VLSI)",
+          "Thế hệ 5 & Tương lai: Trí tuệ nhân tạo (AI) & Điện toán lượng tử",
+          "Kiến trúc chuyên biệt: Chip AI, điện toán biên & tiết kiệm năng lượng"
+        ],
+        svgCaption: "Tiến hóa 70 năm: Từ cỗ máy khổng lồ ENIAC đến vi xử lý AI siêu nhỏ",
+        svg: `
+          <svg viewBox="0 0 420 260" class="w-full h-auto" role="img" aria-label="Hành trình 70 năm các thế hệ máy tính đến kỷ nguyên AI">
+            <!-- Cột trái: Máy tính thế hệ đầu (ENIAC / Tủ máy khổng lồ) -->
+            <rect x="16" y="24" width="128" height="175" rx="12" fill="#131c2e" stroke="#64748b" stroke-width="1.6"/>
+            <text x="80" y="44" text-anchor="middle" fill="#cbd5e1" font-size="10.5" font-weight="700">Thế hệ 1 (1940s)</text>
+            <!-- Tủ đèn điện tử & dây cáp -->
+            <rect x="32" y="54" width="96" height="114" rx="6" fill="#090f1a" stroke="#475569"/>
+            <circle cx="52" cy="74" r="5" fill="#fbbf24" fill-opacity="0.7"/>
+            <circle cx="80" cy="74" r="5" fill="#fbbf24" fill-opacity="0.7"/>
+            <circle cx="108" cy="74" r="5" fill="#fbbf24" fill-opacity="0.7"/>
+            <path d="M 42 92 Q 80 125 118 96" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+            <path d="M 42 118 Q 80 150 118 122" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+            <text x="80" y="186" text-anchor="middle" fill="#94a3b8" font-size="9">Đèn chân không • 30 tấn</text>
+
+            <!-- Mũi tên tiến hóa 70 năm ở giữa -->
+            <line x1="152" y1="112" x2="262" y2="112" stroke="url(#grad70)" stroke-width="3"/>
+            <defs>
+              <linearGradient id="grad70" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#64748b"/>
+                <stop offset="100%" stop-color="#38bdf8"/>
+              </linearGradient>
+            </defs>
+            <polygon points="262,106 272,112 262,118" fill="#38bdf8"/>
+            <rect x="166" y="84" width="88" height="20" rx="6" fill="#0f294a" stroke="#fbbf24" stroke-opacity="0.5"/>
+            <text x="210" y="97" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="700">Hành trình 70 năm</text>
+
+            <!-- Cột phải: Vi xử lý AI & Kiến trúc tương lai -->
+            <rect x="276" y="24" width="128" height="175" rx="12" fill="#0b2442" stroke="#38bdf8" stroke-width="1.8"/>
+            <text x="340" y="44" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-weight="700">Kỷ nguyên AI &amp; Tương lai</text>
+            <!-- Chip bán dẫn phát sáng -->
+            <rect x="304" y="68" width="72" height="72" rx="10" fill="#071426" stroke="#22d3ee" stroke-width="2"/>
+            <rect x="320" y="84" width="40" height="40" rx="6" fill="#164e63" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="340" y="108" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="800">AI</text>
+            <!-- Chân kết nối vi mạch -->
+            <line x1="294" y1="86" x2="304" y2="86" stroke="#38bdf8" stroke-width="2"/>
+            <line x1="294" y1="104" x2="304" y2="104" stroke="#38bdf8" stroke-width="2"/>
+            <line x1="294" y1="122" x2="304" y2="122" stroke="#38bdf8" stroke-width="2"/>
+            <line x1="376" y1="86" x2="386" y2="86" stroke="#38bdf8" stroke-width="2"/>
+            <line x1="376" y1="104" x2="386" y2="104" stroke="#38bdf8" stroke-width="2"/>
+            <line x1="376" y1="122" x2="386" y2="122" stroke="#38bdf8" stroke-width="2"/>
+            <text x="340" y="164" text-anchor="middle" fill="#bae6fd" font-size="9" font-weight="600">Vi xử lý nanomet</text>
+            <text x="340" y="186" text-anchor="middle" fill="#fde68a" font-size="9">Kiến trúc chuyên biệt</text>
+
+            <!-- Dòng thời gian 5 thế hệ bên dưới -->
+            <rect x="16" y="210" width="388" height="34" rx="10" fill="#091b34" stroke="#38bdf8" stroke-opacity="0.25"/>
+            <text x="210" y="231" text-anchor="middle" fill="#e2e8f0" font-size="9.5" font-weight="600">1. Đèn điện tử → 2. Transistor → 3. Mạch IC → 4. Vi xử lý → 5. AI &amp; Lượng tử</text>
+          </svg>
+        `,
+        files: [
+          { ext: "PDF", color: "rose", name: "Lich_su_5_The_he_May_tinh_va_Tuong_lai_AI.pdf", desc: "Tổng hợp mốc công nghệ từ ENIAC (1946), định luật Moore đến chip AI và máy tính lượng tử.", preview: "Tóm tắt 5 thế hệ: (1) Vacuum Tubes; (2) Transistors; (3) Integrated Circuits; (4) Microprocessors; (5) Artificial Intelligence & Quantum Computing." },
+          { ext: "DOCX", color: "blue", name: "Bai_luan_Kien_truc_Chuyen_biet_Ky_nguyen_AI.docx", desc: "Phân tích xu hướng thiết kế vi xử lý chuyên dụng (TPU, NPU) và điện toán lượng tử.", preview: "Khi định luật Moore tiến tới giới hạn vật lý nguyên tử, tương lai máy tính chuyển sang kiến trúc chuyên biệt (Domain-Specific Architecture) và Qubit lượng tử." },
+          { ext: "PPTX", color: "amber", name: "Timeline_70_Nam_Phat_trien_May_tinh.pptx", desc: "Biểu đồ trực quan so sánh kích thước, tốc độ và mức tiêu thụ năng lượng qua 7 thập kỷ.", preview: "Một chiếc smartphone ngày nay có năng lực tính toán gấp hàng triệu lần hệ thống máy tính dẫn đường tàu Apollo 11 năm 1969." }
+        ],
+        media: {
+          imageTitle: "Đối chiếu 70 năm: Máy tính đèn điện tử ENIAC vs Vi xử lý AI hiện đại",
+          videoTitle: "Bài giảng số 08: Từ ENIAC đến Kỷ nguyên AI & Điện toán Lượng tử (10:15)",
+          videoSummary: "Hành trình nhìn lại 70 năm thu nhỏ linh kiện bán dẫn và mở ra kỷ nguyên mới nơi máy tính có khả năng học hỏi, suy luận và sáng tạo cùng con người."
+        },
+        links: [
+          { title: "Computer History Museum — Timeline of Computer History", url: "https://www.computerhistory.org/timeline/", tag: "Bảo tàng số" },
+          { title: "IBM Quantum — Giới thiệu Điện toán Lượng tử tương lai", url: "https://www.ibm.com/quantum", tag: "Công nghệ tương lai" },
+          { title: "NVIDIA AI Architecture — Kiến trúc vi xử lý kỷ nguyên AI", url: "https://www.nvidia.com/", tag: "Vi xử lý AI" }
+        ],
+        defaultNote: "• Ý chính: Hành trình 70 năm phát triển máy tính là quá trình thu nhỏ kích thước linh kiện và bùng nổ năng lực xử lý.\n• 5 thế hệ cốt lõi: Đèn điện tử → Bóng bán dẫn → Mạch tích hợp IC → Vi xử lý → Trí tuệ nhân tạo & Lượng tử.\n• Tương lai: Chuyển dịch sang kiến trúc chuyên biệt cho AI và điện toán lượng tử.",
+        tags: ["#CacTheHeMayTinh", "#ENIAC", "#KyNguyenAI", "#DienToanLuongTu", "#TuongLaiSo"]
+      }
+    ];
+
+    // =========================================================================
+    // TRẠNG THÁI ỨNG DỤNG & LƯU TRỮ LOCALSTORAGE
+    // =========================================================================
+    let currentSlideIndex = 0; // 0 -> 7 tương ứng Slide 01 -> Slide 08
+    const STORAGE_KEY_PROFILE = "tvscn_student_profile_v1";
+    const STORAGE_KEY_NOTES = "tvscn_slide_notes_v1";
+
+    // Khởi tạo khi trang tải xong
+    document.addEventListener("DOMContentLoaded", () => {
+      loadStudentProfile();
+      setupStudentProfileListeners();
+      renderSlideTabs();
+      renderSlide(0);
+
+      // Tự động lưu ghi chú khi người dùng gõ
+      const noteInput = document.getElementById("personalNoteInput");
+      noteInput.addEventListener("input", () => {
+        document.getElementById("noteSaveStatus").textContent = "Đang nhập...";
+        document.getElementById("noteSaveStatus").className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-400/15 text-amber-300 border border-amber-400/30";
+        clearTimeout(window.__autoSaveNoteTimer);
+        window.__autoSaveNoteTimer = setTimeout(() => {
+          saveCurrentNote(false);
+        }, 600);
+      });
+    });
+
+    // =========================================================================
+    // 1. QUẢN LÝ THÔNG TIN SINH VIÊN (HỌ TÊN, MSSV, MÔN HỌC)
+    // =========================================================================
+    function loadStudentProfile() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY_PROFILE) || "{}");
+        //if (saved.name) document.getElementById("studentName").textContent = saved.name;
+        // if (saved.mssv) document.getElementById("studentId").textContent = saved.mssv;
+        //if (saved.course) document.getElementById("courseName").textContent = saved.course;
+      } catch (err) {
+        // Bỏ qua nếu môi trường chặn storage
+      }
+    }
+
+    function setupStudentProfileListeners() {
+      ["studentName", "studentId", "courseName"].forEach((id) => {
+        const el = document.getElementById(id);
+        el.addEventListener("blur", saveStudentProfile);
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            el.blur();
+          }
+        });
+      });
+    }
+
+    function saveStudentProfile() {
+      try {
+        const profile = {
+          //name: document.getElementById("studentName").textContent.trim() || "[Họ và tên]",
+          //mssv: document.getElementById("studentId").textContent.trim() || "[Mã số]",
+          //course: document.getElementById("courseName").textContent.trim() || "[Tên môn]"
+        };
+        localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(profile));
+      } catch (err) {
+        // Bỏ qua nếu môi trường chặn storage
+      }
+    }
+
+    // =========================================================================
+    // 2. RENDER THANH CHUYỂN ĐỔI 8 SLIDE & NỘI DUNG TỪNG SLIDE
+    // =========================================================================
+    function renderSlideTabs() {
+      const container = document.getElementById("slideTabsContainer");
+      container.innerHTML = SLIDES_DATA.map((slide, idx) => `
+        <button type="button"
+                onclick="renderSlide(${idx})"
+                id="tab-slide-${idx}"
+                class="slide-tab px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer border whitespace-nowrap">
+          ${slide.shortTitle}
+        </button>
+      `).join("");
+    }
+
+    function renderSlide(index) {
+      if (index < 0 || index >= SLIDES_DATA.length) return;
+      currentSlideIndex = index;
+      const slide = SLIDES_DATA[index];
+      const slideNumStr = String(slide.id).padStart(2, "0");
+
+      // Cập nhật trạng thái active trên thanh 8 tabs
+      document.querySelectorAll(".slide-tab").forEach((btn, idx) => {
+        if (idx === index) {
+          btn.className = "slide-tab px-3 py-1.5 rounded-xl text-xs font-bold bg-sky-500 text-slate-950 border border-sky-400 shadow-md shadow-sky-500/20 transition cursor-pointer whitespace-nowrap";
+          btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        } else {
+          btn.className = "slide-tab px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-900/80 text-slate-300 hover:text-sky-300 hover:bg-slate-800 border border-slate-700/70 transition cursor-pointer whitespace-nowrap";
+        }
+      });
+
+      // Kích hoạt lại animation mượt khi đổi slide
+      const mainContainer = document.getElementById("slideMainContainer");
+      mainContainer.classList.remove("slide-animate");
+      void mainContainer.offsetWidth;
+      mainContainer.classList.add("slide-animate");
+
+      // Cập nhật Header & Hero
+      document.getElementById("navSlideBadge").textContent = `SLIDE ${slideNumStr} / 08`;
+      document.getElementById("navSubCategory").textContent = slide.category;
+      document.getElementById("heroTopicTag").textContent = slide.topicTag;
+      document.getElementById("heroTitle").textContent = slide.title;
+      document.getElementById("heroSubtitle").textContent = slide.subtitle;
+      document.getElementById("heroDescription").textContent = slide.description;
+      document.getElementById("sectionSlideLabel").textContent = `Slide ${slideNumStr}: ${slide.title}`;
+
+      // Render các điểm nhấn kiến thức (Bullets)
+      document.getElementById("heroBullets").innerHTML = slide.bullets.map((b) => `
+        <div class="flex items-start gap-2 text-xs sm:text-sm text-slate-200 bg-slate-900/65 px-3 py-2 rounded-xl border border-sky-400/15">
+          <span class="text-amber-400 font-bold mt-0.5">✦</span>
+          <span>${b}</span>
+        </div>
+      `).join("");
+
+      // Render hình minh họa SVG riêng của Slide
+      document.getElementById("svgCaptionTitle").textContent = slide.svgCaption;
+      document.getElementById("heroSvgContainer").innerHTML = slide.svg;
+
+      // Render Thành phần a) Dạng tập tin (File)
+      const badgeColorMap = {
+        rose: "bg-rose-500/20 text-rose-300 border-rose-500/30",
+        blue: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        emerald: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+        amber: "bg-amber-500/20 text-amber-300 border-amber-500/30"
+      };
+      document.getElementById("componentFilesList").innerHTML = slide.files.map((f, fIdx) => `
+        <div class="flex items-center justify-between gap-2.5 bg-slate-900/70 px-3.5 py-2.5 rounded-xl border border-slate-700/70 hover:border-sky-400/40 transition">
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 text-[10px] font-bold rounded border shrink-0 ${badgeColorMap[f.color] || badgeColorMap.blue}">.${f.ext}</span>
+              <p class="text-xs sm:text-sm font-semibold text-white truncate" title="${f.name}">${f.name}</p>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5 line-clamp-1">${f.desc}</p>
+          </div>
+          <button type="button" onclick="openFilePreview(${fIdx})" class="shrink-0 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-sky-500/15 text-sky-300 hover:bg-sky-500 hover:text-slate-950 border border-sky-400/30 transition cursor-pointer">
+            Xem trước
+          </button>
+        </div>
+      `).join("");
+
+      // Render Thành phần b) Hình ảnh hay Video
+      document.getElementById("componentMediaBox").innerHTML = `
+        <div class="p-3 rounded-xl bg-slate-900/75 border border-cyan-400/25 flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center shrink-0 text-cyan-300">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-cyan-400">Hình ảnh / Infographic (.SVG / .PNG)</span>
+            <p class="text-xs sm:text-sm font-semibold text-white truncate">${slide.media.imageTitle}</p>
+            <p class="text-[11px] text-slate-400">Đồ họa vector sắc nét đính kèm trong thư viện</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-slate-900/75 border border-amber-400/25 flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center shrink-0 text-amber-300">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Video bài giảng (.MP4)</span>
+            <p class="text-xs sm:text-sm font-semibold text-white truncate">${slide.media.videoTitle}</p>
+            <p class="text-[11px] text-slate-400 line-clamp-1">${slide.media.videoSummary}</p>
+          </div>
+        </div>
+      `;
+
+      // Render Thành phần c) Link tham chiếu đến website khác
+      document.getElementById("componentLinksList").innerHTML = slide.links.map((lk) => `
+        <div class="flex items-center justify-between gap-2 bg-slate-900/70 px-3.5 py-2.5 rounded-xl border border-slate-700/70 hover:border-amber-400/40 transition">
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 shrink-0">${lk.tag}</span>
+              <a href="${lk.url}" target="_blank" rel="noopener noreferrer" class="text-xs sm:text-sm font-semibold text-sky-300 hover:text-amber-300 underline decoration-sky-500/40 truncate transition">
+                ${lk.title}
+              </a>
+            </div>
+            <p class="text-[11px] text-slate-400 truncate mt-0.5">${lk.url}</p>
+          </div>
+          <button type="button" onclick="copyUrlToClipboard('${lk.url}')" title="Sao chép đường dẫn" class="shrink-0 p-2 rounded-lg bg-slate-800 hover:bg-amber-400 hover:text-slate-950 text-slate-300 border border-slate-700 transition cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          </button>
+        </div>
+      `).join("");
+
+      // Render Thành phần d) Ghi chú cá nhân & Tags
+      const savedNotes = getSavedNotesMap();
+      const noteValue = savedNotes[slide.id] !== undefined ? savedNotes[slide.id] : slide.defaultNote;
+      document.getElementById("personalNoteInput").value = noteValue;
+      document.getElementById("noteSaveStatus").textContent = "Đã đồng bộ";
+      document.getElementById("noteSaveStatus").className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-400/10 text-emerald-300 border border-emerald-400/25";
+
+      document.getElementById("noteTagsContainer").innerHTML = slide.tags.map((t) => `
+        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">${t}</span>
+      `).join("");
+
+      // Cập nhật Footer & Nút điều hướng Trước / Sau
+      document.getElementById("footerSlideTitle").textContent = `Slide ${slideNumStr}: ${slide.title}`;
+      document.getElementById("footerPageIndicator").textContent = `Slide ${slideNumStr} / 08`;
+      document.getElementById("btnPrevSlide").disabled = index === 0;
+      document.getElementById("btnNextSlide").disabled = index === SLIDES_DATA.length - 1;
+    }
+
+    function navigateSlide(delta) {
+      const target = currentSlideIndex + delta;
+      if (target >= 0 && target < SLIDES_DATA.length) {
+        renderSlide(target);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    // Hỗ trợ phím mũi tên Trái / Phải để chuyển slide nhanh (khi không gõ chữ)
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeUniversalModal();
+        return;
+      }
+      const activeTag = document.activeElement?.tagName;
+      const isEditing = activeTag === "TEXTAREA" || activeTag === "INPUT" || document.activeElement?.isContentEditable;
+      if (isEditing) return;
+
+      if (e.key === "ArrowLeft") navigateSlide(-1);
+      if (e.key === "ArrowRight") navigateSlide(1);
+    });
+
+    // =========================================================================
+    // 3. QUẢN LÝ GHI CHÚ CÁ NHÂN (MỤC D)
+    // =========================================================================
+    function getSavedNotesMap() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY_NOTES) || "{}");
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveCurrentNote(showToastMsg) {
+      const slide = SLIDES_DATA[currentSlideIndex];
+      const text = document.getElementById("personalNoteInput").value;
+      try {
+        const notes = getSavedNotesMap();
+        notes[slide.id] = text;
+        localStorage.setItem(STORAGE_KEY_NOTES, JSON.stringify(notes));
+      } catch (e) {
+        // Bỏ qua nếu môi trường hạn chế storage
+      }
+      const statusEl = document.getElementById("noteSaveStatus");
+      statusEl.textContent = "Đã lưu";
+      statusEl.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-400/15 text-emerald-300 border border-emerald-400/30";
+      if (showToastMsg) {
+        showToast(`Đã lưu ghi chú cá nhân cho Slide ${String(slide.id).padStart(2, "0")}!`);
+      }
+    }
+
+    function resetCurrentNote() {
+      const slide = SLIDES_DATA[currentSlideIndex];
+      document.getElementById("personalNoteInput").value = slide.defaultNote;
+      saveCurrentNote(false);
+      showToast("Đã khôi phục nội dung ghi chú mẫu của slide.");
+    }
+
+    // =========================================================================
+    // 4. MODAL XEM TRƯỚC TỆP TIN, PHÓNG TO HÌNH & VIDEO BÀI GIẢNG
+    // =========================================================================
+    function openUniversalModal(badge, title, bodyHtml) {
+      document.getElementById("uModalBadge").textContent = badge;
+      document.getElementById("uModalTitle").textContent = title;
+      document.getElementById("uModalBody").innerHTML = bodyHtml;
+      const modal = document.getElementById("universalModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeUniversalModal() {
+      const modal = document.getElementById("universalModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    document.getElementById("universalModal").addEventListener("click", (e) => {
+      if (e.target.id === "universalModal") closeUniversalModal();
+    });
+
+    function openFilePreview(fileIdx) {
+      const slide = SLIDES_DATA[currentSlideIndex];
+      const file = slide.files[fileIdx];
+      if (!file) return;
+      openUniversalModal(
+        `Thành phần a) Dạng tập tin (.${file.ext})`,
+        file.name,
+        `
+          <div class="space-y-3">
+            <p class="text-xs text-slate-400">${file.desc}</p>
+            <div class="p-4 rounded-xl bg-[#050e1c] border border-sky-400/30 font-sans text-sm text-slate-200 leading-relaxed">
+              <div class="text-xs font-bold uppercase tracking-wider text-sky-400 mb-2">Trích đoạn nội dung tài liệu:</div>
+              <p>${file.preview}</p>
+            </div>
+          </div>
+        `
+      );
+    }
+
+    function openMediaLightbox() {
+      const slide = SLIDES_DATA[currentSlideIndex];
+      openUniversalModal(
+        "Thành phần b) Hình ảnh & Infographic trực quan",
+        slide.media.imageTitle,
+        `
+          <div class="rounded-xl bg-[#050e1c] border border-cyan-400/30 p-4">
+            ${slide.svg}
+          </div>
+          <p class="text-xs text-slate-400 mt-3 text-center">${slide.svgCaption}</p>
+        `
+      );
+    }
+
+    function openVideoModal() {
+      const slide = SLIDES_DATA[currentSlideIndex];
+      openUniversalModal(
+        "Thành phần b) Trình phát Video bài giảng số",
+        slide.media.videoTitle,
+        `
+          <div class="rounded-2xl overflow-hidden border border-amber-400/35 bg-[#040a14]">
+            <div class="relative p-4 bg-gradient-to-b from-slate-900 to-[#040a14]">
+              <div class="max-w-md mx-auto">
+                ${slide.svg}
+              </div>
+              <div class="mt-3 flex items-center gap-3 bg-slate-900/90 px-3.5 py-2 rounded-xl border border-slate-700">
+                <span class="w-7 h-7 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-xs shrink-0">▶</span>
+                <div class="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                  <div class="w-2/3 h-full bg-gradient-to-r from-sky-400 to-amber-400"></div>
+                </div>
+                <span class="text-[11px] font-mono text-slate-300">05:12 / 08:45</span>
+              </div>
+            </div>
+            <div class="p-4 bg-slate-900/80 border-t border-slate-800">
+              <p class="text-xs font-bold text-amber-300 uppercase mb-1">Tóm tắt nội dung Video bài giảng:</p>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${slide.media.videoSummary}</p>
+            </div>
+          </div>
+        `
+      );
+    }
+
+    // =========================================================================
+    // 5. SAO CHÉP URL & XUẤT FILE HTML ĐỘC LẬP CHO TỪNG SLIDE (NỘP BÀI)
+    // =========================================================================
+    function copyUrlToClipboard(url) {
+      const tempInput = document.createElement("input");
+      tempInput.value = url;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand("copy");
+        showToast("Đã sao chép đường link tham chiếu vào bộ nhớ tạm!");
+      } catch (e) {
+        showToast("Không thể sao chép tự động, vui lòng bôi đen đường link.");
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    function downloadCurrentSlideHTML() {
+      const slide = SLIDES_DATA[currentSlideIndex];
+      const slideNum = String(slide.id).padStart(2, "0");
+      const svName = document.getElementById("studentName").textContent.trim();
+      const svId = document.getElementById("studentId").textContent.trim();
+      const svCourse = document.getElementById("courseName").textContent.trim();
+      const currentNote = document.getElementById("personalNoteInput").value;
+
+      // Tạo mã HTML độc lập, tự chạy hoàn chỉnh cho riêng Slide đang chọn
+      const standaloneHtml = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thư viện số cá nhân — Slide ${slideNum}: ${slide.title}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"><\/script>
+  <style>
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      background-color: #071426;
+      background-image:
+        radial-gradient(circle at 12% 14%, rgba(56, 189, 248, 0.14) 0%, transparent 38%),
+        radial-gradient(circle at 88% 18%, rgba(251, 191, 36, 0.10) 0%, transparent 35%);
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+    .glass-card {
+      background: linear-gradient(145deg, rgba(15, 35, 64, 0.80), rgba(9, 23, 44, 0.90));
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      box-shadow: 0 12px 32px -8px rgba(2, 8, 20, 0.65);
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <header class="sticky top-0 z-40 border-b border-sky-400/15 bg-[#071426]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <span class="font-bold text-white text-lg">Thư viện số cá nhân</span>
+        <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/40">SLIDE ${slideNum}</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 text-xs bg-slate-900/90 px-3 py-1.5 rounded-xl border border-sky-400/25">
+        <span class="text-slate-400">SV: <strong class="text-sky-300">${escapeHtml(svName)}</strong></span>
+        <span class="text-slate-600">•</span>
+        <span class="text-slate-400">MSSV: <strong class="text-amber-300">${escapeHtml(svId)}</strong></span>
+        <span class="text-slate-600">•</span>
+        <span class="text-slate-400">Môn: <strong class="text-slate-200">${escapeHtml(svCourse)}</strong></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <section class="glass-card rounded-3xl p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-7 space-y-4">
+        <span class="inline-block px-3 py-1 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-300 text-xs font-semibold">${escapeHtml(slide.topicTag)}</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white">${escapeHtml(slide.title)}</h1>
+        <p class="text-amber-300 font-medium text-lg">${escapeHtml(slide.subtitle)}</p>
+        <p class="text-slate-300 leading-relaxed">${escapeHtml(slide.description)}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+          ${slide.bullets.map(b => `<div class="text-xs sm:text-sm text-slate-200 bg-slate-900/65 px-3 py-2 rounded-xl border border-sky-400/15"><span class="text-amber-400 font-bold">✦</span> ${escapeHtml(b)}</div>`).join("")}
+        </div>
+      </div>
+      <div class="lg:col-span-5 rounded-2xl bg-[#050e1c]/95 border border-sky-400/30 p-4">
+        <p class="text-xs font-semibold text-sky-300 mb-2">${escapeHtml(slide.svgCaption)}</p>
+        <div class="rounded-xl bg-[#071426] border border-slate-800 p-2">${slide.svg}</div>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <article class="glass-card rounded-2xl p-6 space-y-3">
+        <span class="text-xs font-bold uppercase text-sky-400">a) Dạng tập tin (File): PDF, Word &amp; Văn bản khác</span>
+        <h2 class="text-lg font-bold text-white">Tài liệu học thuật lưu trữ</h2>
+        ${slide.files.map(f => `<div class="bg-slate-900/70 p-3 rounded-xl border border-slate-700"><p class="text-sm font-semibold text-sky-300">[.${escapeHtml(f.ext)}] ${escapeHtml(f.name)}</p><p class="text-xs text-slate-300 mt-1">${escapeHtml(f.desc)}</p></div>`).join("")}
+      </article>
+
+      <article class="glass-card rounded-2xl p-6 space-y-3">
+        <span class="text-xs font-bold uppercase text-cyan-400">b) Hình ảnh hay Video</span>
+        <h2 class="text-lg font-bold text-white">Tư liệu đa phương tiện trực quan</h2>
+        <div class="bg-slate-900/70 p-3 rounded-xl border border-cyan-500/30"><p class="text-sm font-semibold text-cyan-300">Hình ảnh: ${escapeHtml(slide.media.imageTitle)}</p></div>
+        <div class="bg-slate-900/70 p-3 rounded-xl border border-amber-500/30"><p class="text-sm font-semibold text-amber-300">Video: ${escapeHtml(slide.media.videoTitle)}</p><p class="text-xs text-slate-300 mt-1">${escapeHtml(slide.media.videoSummary)}</p></div>
+      </article>
+
+      <article class="glass-card rounded-2xl p-6 space-y-3">
+        <span class="text-xs font-bold uppercase text-amber-400">c) Link tham chiếu đến website khác</span>
+        <h2 class="text-lg font-bold text-white">Nguồn học liệu mở trực tuyến</h2>
+        ${slide.links.map(l => `<div class="bg-slate-900/70 p-3 rounded-xl border border-slate-700"><a href="${escapeHtml(l.url)}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-sky-300 underline">${escapeHtml(l.title)}</a><p class="text-xs text-slate-400 mt-0.5">${escapeHtml(l.url)}</p></div>`).join("")}
+      </article>
+
+      <article class="glass-card rounded-2xl p-6 space-y-3">
+        <span class="text-xs font-bold uppercase text-emerald-400">d) Các ghi chú của bản thân về tài liệu đã thu thập</span>
+        <h2 class="text-lg font-bold text-white">Đúc kết &amp; Nhận xét cá nhân</h2>
+        <div class="bg-[#050e1c] p-4 rounded-xl border border-emerald-400/30 text-sm text-slate-200 whitespace-pre-line leading-relaxed">${escapeHtml(currentNote)}</div>
+        <div class="flex flex-wrap gap-1.5">${slide.tags.map(t => `<span class="px-2.5 py-0.5 rounded-full text-xs bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">${escapeHtml(t)}</span>`).join("")}</div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="border-t border-sky-400/15 bg-[#050e1c]/95 py-4 mt-8">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between text-xs text-slate-400">
+      <span>Thư viện số cá nhân — Slide ${slideNum}: ${escapeHtml(slide.title)}</span>
+      <div class="flex gap-2">
+        ${slide.id > 1 ? `<a href="thu_vien_so_ca_nhan_slide_${slide.id - 1}.html" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200">← Slide 0${slide.id - 1}</a>` : ""}
+        <span class="px-3 py-1.5 rounded-lg bg-amber-400/20 text-amber-300 font-bold">Slide ${slideNum} / 08</span>
+        ${slide.id < 8 ? `<a href="thu_vien_so_ca_nhan_slide_${slide.id + 1}.html" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200">Slide 0${slide.id + 1} →</a>` : ""}
+      </div>
+    </div>
+  </footer>
+</body>
+</html>`;
+
+      const blob = new Blob([standaloneHtml], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `thu_vien_so_ca_nhan_slide_${slide.id}.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast(`Đã tải xuống tệp thu_vien_so_ca_nhan_slide_${slide.id}.html!`);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function showToast(msg) {
+      const box = document.getElementById("toastBox");
+      document.getElementById("toastMessage").textContent = msg;
+      box.classList.remove("hidden");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        box.classList.add("hidden");
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
